@@ -1,15 +1,14 @@
-import pic from '../assets/coutinho98.png';
+import img from '../assets/coutinho98.png'
 
-const Image = ({ alt = 'coutinho98' }) => {
+const Image = ({ }) => {
     return (
-        <div className="grid place-items-center h-62 w-full">
+        <div className="mr-4">
             <img
-                src={pic}
-                alt={alt}
-                className="w-42 h-42 transform translate-x-[-20rem] mt-[2rem]"
-            />
+                src={img}
+                alt="Github Profile Picture"
+                className="w-65 h-65" />
         </div>
-    );
-};
+    )
+}
 
-export default Image;
+export default Image
