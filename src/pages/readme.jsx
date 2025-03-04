@@ -1,4 +1,3 @@
-
 const Readme = () => {
     return (
         <div className="mt-4 text-sm font-display">
@@ -20,7 +19,16 @@ const Readme = () => {
                 <li className="flex items-start">
                     <span className="text-stone-200 mr-2">•</span>
                     <p className="text-stone-200">
-                        Building <a href="http://groupgo-mcsh.onrender.com" target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 text-violet-400 font-bold">GroupGo</a> completely solo <span className="text-violet-400 font-bold">[FrontEnd]</span>
+                        Building <a
+                            href="http://groupgo-mcsh.onrender.com"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="underline underline-offset-4 text-violet-400 font-bold">
+                            GroupGo
+                        </a>
+                        <span> </span>
+                         completely solo
+                        <span className="text-violet-400 font-bold">[FrontEnd]</span>
                     </p>
                 </li>
             </ul>
