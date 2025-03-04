@@ -5,20 +5,20 @@ const Readme = () => {
 
             <ul className="space-y-2">
                 <li className="flex items-start">
-                    <span className="text-stone-200 mr-2">•</span>
-                    <p className="text-stone-200">
-                        Currently studying <span className="text-violet-400 font-bold">Reactjs</span> and everything that surrounds it
+                    <span className="text-gray-200 mr-2">•</span>
+                    <p className="text-gray-200">
+                        Currently studying <span className="text-violet-400 font-bold">Reactjs <span className="animate-pulse">💜</span></span> and everything that surrounds it
                     </p>
                 </li>
                 <li className="flex items-start">
-                    <span className="text-stone-200 mr-2">•</span>
-                    <p className="text-stone-200">
+                    <span className="text-gray-200 mr-2">•</span>
+                    <p className="text-gray-200">
                         Fascinated by <span className="text-violet-400 font-bold">Design Systems</span> and <span className="text-violet-400 font-bold">UI/UX</span>
                     </p>
                 </li>
                 <li className="flex items-start">
-                    <span className="text-stone-200 mr-2">•</span>
-                    <p className="text-stone-200">
+                    <span className="text-gray-200 mr-2">•</span>
+                    <p className="text-gray-200">
                         Building <a
                             href="http://groupgo-mcsh.onrender.com"
                             target="_blank"
@@ -27,13 +27,13 @@ const Readme = () => {
                             GroupGo
                         </a>
                         <span> </span>
-                         completely solo
-                        <span className="text-violet-400 font-bold">[FrontEnd]</span>
+                        completely solo
+                        <span className="text-violet-400 font-bold"> [FrontEnd]</span>
                     </p>
                 </li>
             </ul>
-            <div className="mt-3 p-5 bg-gray-800 rounded">
-                <p className="text-base text-gray-300 italic">
+            <div className="mt-3 p-3 bg-zinc-800 rounded">
+                <p className="text-base text-gray-200 italic">
                     "I understand what it's like to be different. I'm very different too."
                 </p>
             </div>

@@ -11,7 +11,13 @@ const GitHubCommits = () => {
             const currentTime = new Date().getTime();
 
             if (cachedData && lastFetchTine && (currentTime - parseInt(lastFetchTine) < 60 * 60 * 1000)) {
-                setCommits(JSON.parse(cachedData))
+
+                const parsedCommits = JSON.parse(cachedData).map(commit => ({
+                    ...commit,
+                    date: new Date(commit.date)
+                }));
+
+                setCommits(parsedCommits)
                 return
             }
 
@@ -46,7 +52,7 @@ const GitHubCommits = () => {
 
         lastCommits();
 
-    }, [username, setCommits]);
+    }, [username]);
 
     const getRelativeTime = (date) => {
         const now = new Date();
@@ -63,13 +69,15 @@ const GitHubCommits = () => {
             <div className="space-y-2">
                 {commits.map((commit, index) => (
                     <div key={index} className="overflow-hidden">
-                        <div className={`bg-gray-800 p-0.5 mr-`}>
-                            <div className="text-gray-300">{commit.message}</div>
+                        <div className={`bg-zinc-800 p-2.5 w-fit mb-2`}>
+                            <div className="text-gray-300 text-xs font-bold">{commit.message}</div>
                         </div>
-                        <div className="pl-2 pt-1 pb-2 text-xs">
-                            <a href={`https://github.com/${username}/${commit.repoName}`} className="text-violet-400 mr-3">{commit.repoName}</a>
-                            <a href={commit.url} className="text-violet-400 mr-3">{commit.sha.substring(0, 7)}</a>
-                            <span className="text-gray-400">{getRelativeTime(commit.date)}</span>
+                        <div className="text-xs">
+                            <a href={`https://github.com/${username}/${commit.repoName}`} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.repoName}</a>
+                            <span className='mx-0.5 mr-1'>/</span>
+                                <a href={commit.url} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.sha.substring(0, 7)}</a>
+                                <span className='mx-0.5 mr-1'>/</span>
+                                <span className="text-gray-300 ml-0.5">{getRelativeTime(commit.date)}</span>
                         </div>
                     </div>
                 ))}
