@@ -74,9 +74,9 @@ const GitHubCommits = () => {
                         </div>
                         <div className="text-xs">
                             <a href={`https://github.com/${username}/${commit.repoName}`} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.repoName}</a>
-                            <span className='mx-0.5 mr-1'>/</span>
+                            <span className='mx-0.5 mr-1 text-gray-200'>/</span>
                                 <a href={commit.url} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.sha.substring(0, 7)}</a>
-                                <span className='mx-0.5 mr-1'>/</span>
+                                <span className='mx-0.5 mr-1 text-gray-200'>/</span>
                                 <span className="text-gray-300 ml-0.5">{getRelativeTime(commit.date)}</span>
                         </div>
                     </div>

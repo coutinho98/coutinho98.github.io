@@ -1,3 +1,5 @@
+import React from 'react'
+
 const Readme = () => {
     return (
         <div className="mt-4 text-sm font-display">
