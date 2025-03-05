@@ -21,35 +21,22 @@ const GitHubCommits = () => {
                 return
             }
 
-            const repositoryResponse = await fetch(`https://api.github.com/users/${username}/repos`);
-            const repos = await repositoryResponse.json();
+            const response = await fetch(`https://api.github.com/search/commits?q=author:${username}&sort=committer-date&order=desc&per_page=5`);
+            const data = await response.json();
 
-            const repoPromise = repos.slice(0, 5).map((repo) =>
-                fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?author=${username}&per_page=5`)
-                    .then((response) => response.json())
-                    .then((repoCommits) =>
-                        repoCommits.map((commit) => ({
-                            repoName: repo.name,
-                            message: commit.commit.message,
-                            sha: commit.sha,
-                            date: new Date(commit.commit.author.date),
-                            url: commit.html_url,
-                        }))
-                    )
-            );
+            const commits = data.items.map((commit) => ({
+                repoName: commit.repository.name,
+                message: commit.commit.message,
+                sha: commit.sha,
+                date: new Date(commit.commit.author.date),
+                url: commit.html_url,
+            }));
 
-            const commits = await Promise.all(repoPromise)
-            const allCommits = commits.flat();
-
-            allCommits.sort((a, b) => b.date - a.date);
-            const slicedCommits = allCommits.slice(0, 5);
-
-            localStorage.setItem('githubCommitsData', JSON.stringify(slicedCommits))
+            localStorage.setItem('githubCommitsData', JSON.stringify(commits))
             localStorage.setItem('githubCommitsLastFetch', currentTime.toString());
 
-            setCommits(slicedCommits)
+            setCommits(commits)
         };
-
         lastCommits();
 
     }, [username]);
@@ -75,9 +62,9 @@ const GitHubCommits = () => {
                         <div className="text-xs">
                             <a href={`https://github.com/${username}/${commit.repoName}`} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.repoName}</a>
                             <span className='mx-0.5 mr-1 text-gray-200'>/</span>
-                                <a href={commit.url} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.sha.substring(0, 7)}</a>
-                                <span className='mx-0.5 mr-1 text-gray-200'>/</span>
-                                <span className="text-gray-300 ml-0.5">{getRelativeTime(commit.date)}</span>
+                            <a href={commit.url} className="text-violet-400 mr-1 underline underline-offset-2 hover:text-violet-200">{commit.sha.substring(0, 7)}</a>
+                            <span className='mx-0.5 mr-1 text-gray-200'>/</span>
+                            <span className="text-gray-300 ml-0.5">{getRelativeTime(commit.date)}</span>
                         </div>
                     </div>
                 ))}
