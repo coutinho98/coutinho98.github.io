@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 const Navigation = ({ }) => {
     return (
-        <div className="flex flex-wrap">
+        <div className="sticky top-4 md:top-16 bg-background">
             <NavLink
                 to='/'
                 className={({ isActive }) => `font-mono font-bold text-2xl ${isActive ? 'font-mono font-bold text-violet-400  border-b-4 border-violet-400' : 'text-gray-400 hover:text-gray-200'}`}>
