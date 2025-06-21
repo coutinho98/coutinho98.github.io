@@ -6,7 +6,7 @@ const Showcase = () => {
         <main className='grip gap-12'>
             <Item
                 name="Shadys Media Donwloader"
-                description="A desktop app to download and watch your favorite videos offline from multiple platforms."
+                description="A desktop application to download your videos quickly without having ads pop up all the time."
                 imageSrc={shadys}
                 tags={["python", "yt-dlp api", "desktop application", "video/audio manipulation"]}
                 links={[
