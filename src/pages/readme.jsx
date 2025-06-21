@@ -2,7 +2,7 @@ import React from 'react'
 
 const Readme = () => {
     return (
-        <div className="mt-4 text-sm font-display">
+        <article className="mt-4 text-sm font-display">
             <p className=" text-stone-300 mb-4">An eternal student, almost finished college and passionate about web development.</p>
 
             <ul className="space-y-2">
@@ -39,7 +39,7 @@ const Readme = () => {
                     "I understand what it's like to be different. I'm very different too."
                 </p>
             </div>
-        </div>
+        </article>
     );
 }
 

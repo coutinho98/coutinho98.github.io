@@ -6,11 +6,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="bg-stone-950 min-h-screen p-6">
-        <div className="max-w-4xl mx-auto mt-10 min-h-screen">
-          <Layout>
-            <Routers />
-          </Layout>
-        </div>
+        <Layout>
+          <Routers />
+        </Layout>
       </div>
     </BrowserRouter>
   )

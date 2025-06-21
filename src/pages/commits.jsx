@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const GitHubCommits = () => {
+const Commits = () => {
     const [commits, setCommits] = useState([]);
     const username = 'coutinho98';
 
@@ -34,11 +34,9 @@ const GitHubCommits = () => {
 
             localStorage.setItem('githubCommitsData', JSON.stringify(commits))
             localStorage.setItem('githubCommitsLastFetch', currentTime.toString());
-
             setCommits(commits)
         };
         lastCommits();
-
     }, [username]);
 
     const getRelativeTime = (date) => {
@@ -52,10 +50,10 @@ const GitHubCommits = () => {
     };
 
     return (
-        <div className="mt-4">
+        <section className="mt-4">
             <div className="space-y-2">
                 {commits.map((commit, index) => (
-                    <div key={index} className="overflow-hidden">
+                    <article key={index} className="overflow-hidden">
                         <div className={`bg-zinc-800 p-2.5 w-fit mb-2`}>
                             <div className="text-gray-300 text-xs font-bold">{commit.message}</div>
                         </div>
@@ -66,11 +64,11 @@ const GitHubCommits = () => {
                             <span className='mx-0.5 mr-1 text-gray-200'>/</span>
                             <span className="text-gray-300 ml-0.5">{getRelativeTime(commit.date)}</span>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 
-export default GitHubCommits;
+export default Commits;

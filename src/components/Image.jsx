@@ -5,7 +5,7 @@ const Image = () => {
         <img
             src={img}
             alt="Github Profile Picture"
-            className="w-64 h-64  "
+            className="w-64 h-64 "
         />
     )
 }
