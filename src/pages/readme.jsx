@@ -36,7 +36,7 @@ const Readme = () => {
             </ul>
             <div className="mt-3 p-3 bg-zinc-800 rounded">
                 <p className="text-base text-gray-200 italic">
-                    "I understand what it's like to be different. I'm very different too."
+                    "Nunca se esqueça de quem você é, porque é certo que o mundo não se lembrará. Faça disso sua força. Assim, não poderá ser nunca a sua fraqueza. Arme-se com esta lembrança, e ela nunca poderá ser usada para magoá-lo."
                 </p>
             </div>
         </article>
