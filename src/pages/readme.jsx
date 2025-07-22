@@ -18,7 +18,7 @@ const Readme = () => {
                         Fascinated by <span className="text-violet-400 font-bold">Design Systems</span> and <span className="text-violet-400 font-bold">UI/UX</span>
                     </p>
                 </li>
-                <li className="flex items-start">
+{/*                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
                     <p className="text-gray-200">
                         Building <a
@@ -32,7 +32,7 @@ const Readme = () => {
                         completely solo
                         <span className="text-violet-400 font-bold"> [FrontEnd]</span>
                     </p>
-                </li>
+                </li> */}
             </ul>
             <div className="mt-3 p-3 bg-zinc-800 rounded">
                 <p className="text-base text-gray-200 italic">

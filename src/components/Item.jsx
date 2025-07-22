@@ -30,7 +30,7 @@ const Item = ({ name, description, imageSrc, tags, links = [] }) => (
         )}
 
         {links.length > 0 && (
-            <ul className="flex gap-2 text-violet-400 underline underline-offset-4">
+            <ul className="flex gap-2 text-violet-400 underline underline-offset-4 hover:text-violet-100 transition delay-300 duration-1000">
                 {links.map((linkProps) => (
                     <li key={linkProps.href}>
                         <a {...linkProps} className="text-xs" target="_blank" rel="noopener noreferrer" />
