@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Readme = () => {
     return (
         <article className="mt-4 text-sm font-display">
@@ -9,8 +7,7 @@ const Readme = () => {
                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
                     <p className="text-gray-200">
-                        Currently studying <span className="text-violet-400 font-bold">Reactjs <span className="animate-pulse">💜</span></span> and everything that surrounds it
-                    </p>
+                        Currently studying <span className="text-violet-400 font-bold">Reactjs <span className="animate-pulse">💜</span></span></p>
                 </li>
                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
@@ -18,7 +15,7 @@ const Readme = () => {
                         Fascinated by <span className="text-violet-400 font-bold">Design Systems</span> and <span className="text-violet-400 font-bold">UI/UX</span>
                     </p>
                 </li>
-{/*                 <li className="flex items-start">
+                {/*                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
                     <p className="text-gray-200">
                         Building <a
@@ -36,7 +33,7 @@ const Readme = () => {
             </ul>
             <div className="mt-3 p-3 bg-zinc-800 rounded">
                 <p className="text-base text-gray-200 italic">
-                    "Nunca se esqueça de quem você é, porque é certo que o mundo não se lembrará. Faça disso sua força. Assim, não poderá ser nunca a sua fraqueza. Arme-se com esta lembrança, e ela nunca poderá ser usada para magoá-lo."
+                    "Never forget what you are, for surely the world will not. Make it your strength. Then it can never be your weakness. Armour yourself in it, and it will never be used to hurt you."
                 </p>
             </div>
         </article>
