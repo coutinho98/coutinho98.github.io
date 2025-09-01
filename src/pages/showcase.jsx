@@ -1,5 +1,6 @@
 import Item from '../components/Item'
 import shadys from '../assets/shadysdownloader.png'
+import shadysviewer from '../assets/shadys.png'
 
 const Showcase = () => {
     return (
@@ -13,8 +14,19 @@ const Showcase = () => {
                     { children: "github", href: "https://github.com/coutinho98/ShadysDownloader" },
                 ]}
             />
+ <Item
+                name="Shadys Viewer"
+                description="The shadys viewer project is a web-based JSON viewer, designed to quickly analyze and format JSON data."
+                imageSrc={shadysviewer}
+                tags={["reactjs ", "typescript", "tailwindcss",]}
+                links={[
+                    { children: "github", href: "https://github.com/coutinho98/shadysviewer" },
+                ]}
+            />
         </main>
     )
 }
 
 export default Showcase
+
+//
