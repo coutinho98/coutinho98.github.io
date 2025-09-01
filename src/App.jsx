@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router'
 import Routers from './Routers'
 import Layout from './components/Layout'
+import SplashCursor from './components/SplashCursor/SplashCursor'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Layout>
           <Routers />
         </Layout>
+         <SplashCursor />
       </div>
     </BrowserRouter>
   )
