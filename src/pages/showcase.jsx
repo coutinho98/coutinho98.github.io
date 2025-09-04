@@ -23,7 +23,9 @@ const Showcase = () => {
                 links={[
                     {
                         children: "github", href: "https://github.com/coutinho98/shadysviewer",
-                        children: "website", href: "https://shadysviewer.vercel.app/"
+                    },
+                    {
+                        children: "website", href: "https://viewer-ruddy.vercel.app/"
                     },
                 ]}
             />
