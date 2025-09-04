@@ -1,6 +1,7 @@
 import Item from '../components/Item'
 import shadys from '../assets/shadysdownloader.png'
 import shadysviewer from '../assets/shadys.png'
+import { href } from 'react-router'
 
 const Showcase = () => {
     return (
@@ -14,13 +15,16 @@ const Showcase = () => {
                     { children: "github", href: "https://github.com/coutinho98/ShadysDownloader" },
                 ]}
             />
- <Item
+            <Item
                 name="Shadys Viewer"
                 description="The shadys viewer project is a web-based JSON viewer, designed to quickly analyze and format JSON data."
                 imageSrc={shadysviewer}
                 tags={["reactjs ", "typescript", "tailwindcss",]}
                 links={[
-                    { children: "github", href: "https://github.com/coutinho98/shadysviewer" },
+                    {
+                        children: "github", href: "https://github.com/coutinho98/shadysviewer",
+                        children: "website", href: "https://shadysviewer.vercel.app/"
+                    },
                 ]}
             />
         </main>
