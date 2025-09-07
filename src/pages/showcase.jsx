@@ -1,7 +1,6 @@
 import Item from '../components/Item'
 import shadys from '../assets/shadysdownloader.png'
 import shadysviewer from '../assets/shadys.png'
-import { href } from 'react-router'
 
 const Showcase = () => {
     return (

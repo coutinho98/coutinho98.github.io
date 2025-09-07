@@ -1,5 +1,5 @@
 const Item = ({ name, description, imageSrc, tags, links = [] }) => (
-    <article className="grid gap-4 mt-5 text-stone-300 ">
+    <article className="grid gap-4 mt-5 text-white ">
         <h3 className="text-2xl leading-none font-bold tracking-wide">{name}</h3>
 
         <div className=" flex gap-8 justify-between w-full items-center">
