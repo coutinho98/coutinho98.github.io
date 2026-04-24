@@ -1,20 +1,9 @@
 const Readme = () => {
     return (
         <article className="mt-4 text-sm font-display">
-            <p className=" text-stone-300 mb-4">An eternal student, almost finished college and passionate about web development.</p>
+            <p className=" text-stone-300 mb-4">Built <span className="text-violet-400 font-bold">Sensei</span>, completely solo - <a href="https://sensei.app.br" target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 text-violet-400 font-bold">sensei.app.br</a></p>
 
             <ul className="space-y-2">
-                <li className="flex items-start">
-                    <span className="text-gray-200 mr-2">•</span>
-                    <p className="text-gray-200">
-                        Currently studying <span className="text-violet-400 font-bold">Reactjs <span className="animate-pulse">💜</span></span></p>
-                </li>
-                <li className="flex items-start">
-                    <span className="text-gray-200 mr-2">•</span>
-                    <p className="text-gray-200">
-                        Fascinated by <span className="text-violet-400 font-bold">Design Systems</span> and <span className="text-violet-400 font-bold">UI/UX</span>
-                    </p>
-                </li>
                 {/*                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
                     <p className="text-gray-200">
