@@ -18,7 +18,7 @@ const Readme = () => {
                 <li className="flex items-start">
                     <span className="text-gray-200 mr-2">•</span>
                     <p className="text-gray-200">
-                        Built <a href="https://sensei.app.br" target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 text-violet-400 font-bold">Sensei</a>, completely solo - <a href="https://sensei.app.br" target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 text-violet-400 font-bold">sensei.app.br</a>
+                        Built <a href="https://sensei.app.br" target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 text-violet-400 font-bold">Sensei</a>, completely solo
                     </p>
                 </li>
                 {/*                 <li className="flex items-start">
