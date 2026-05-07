@@ -1,6 +1,6 @@
 const Item = ({ name, description, imageSrc, tags, links = [] }) => (
     <article className="grid gap-4 mt-5 text-stone-300 ">
-        <h3 className="text-2xl leading-none font-bold tracking-wide">{name}</h3>
+        <h3 className="text-2xl leading-none text-stone-100 font-bold tracking-wide">{name}</h3>
 
         <div className=" flex gap-8 justify-between w-full items-center">
             <p className="text-onBackgroundVariant text-sm text-justify">
@@ -22,7 +22,7 @@ const Item = ({ name, description, imageSrc, tags, links = [] }) => (
                 {tags.map((tag) => (
                     <div
                         key={tag}
-                        className="backticks text-xs bg-zinc-700 text-gray-100 px-2.5 py-1 rounded-md inline-flex items-center justify-center whitespace-nowrap">
+                        className="backticks text-xs bg-zinc-700 text-gray-100 px-2.5 py-1 font-bold rounded-md inline-flex items-center justify-center whitespace-nowrap">
                         {tag}
                     </div>
                 ))}
