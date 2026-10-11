@@ -1,18 +1,30 @@
-import { BrowserRouter } from 'react-router'
-import Routers from './Routers'
-import Layout from './components/Layout'
-import SplashCursor from './components/SplashCursor/SplashCursor'
+import { useEffect } from 'react'
+import { MotionConfig } from 'motion/react'
+import { bind } from 'cuelume'
+import NavPill from './components/NavPill'
+import AsciiHero from './components/AsciiHero'
+import Hero from './components/Hero'
+import Projects from './components/Projects'
+import Footer from './components/Footer'
 
 function App() {
+  useEffect(() => {
+    const unbind = bind()
+    return () => unbind?.()
+  }, [])
+
   return (
-    <BrowserRouter>
-      <div className="bg-stone-950 min-h-screen p-6">
-        <Layout>
-          <Routers />
-        </Layout>
-         <SplashCursor />
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-dvh bg-bg font-sans text-ink antialiased">
+        <NavPill />
+        <AsciiHero />
+        <main className="mx-auto max-w-2xl bg-bg px-6">
+          <Hero />
+          <Projects />
+          <Footer />
+        </main>
       </div>
-    </BrowserRouter>
+    </MotionConfig>
   )
 }
 

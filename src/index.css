@@ -1,4 +1,47 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: theme(colors.bg);
+}
+
+::selection {
+  background-color: theme(colors.accent);
+  color: theme(colors.bg);
+}
+
+:focus-visible {
+  outline: 2px solid theme(colors.accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- gooey nav pill ---------- */
+.goo-layer {
+  filter: url(#nav-goo);
+}
+
+.goo-blob {
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-pill:has(li:nth-child(2):hover) .goo-blob,
+.nav-pill:has(li:nth-child(2):focus-visible) .goo-blob {
+  transform: translateX(40px);
+}
+
+.nav-pill li:nth-child(2):hover a,
+.nav-pill li:nth-child(2):focus-visible a {
+  color: theme(colors.ink);
+}
