@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import Keys from './Keys'
 import { GitHub, Linkedin, Email } from './Icons'
 
 const socials = [
@@ -13,8 +14,8 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="pb-28">
-      <Reveal className="flex items-center gap-4 border-t border-line pt-6">
+    <footer className="relative">
+      <Reveal className="relative z-10 flex items-center gap-4 border-t border-line pt-6">
         <nav aria-label="Social media">
           <ul className="flex items-center gap-4">
             {socials.map(({ href, label, Icon }) => (
@@ -34,6 +35,7 @@ const Footer = () => {
           </ul>
         </nav>
       </Reveal>
+      <Keys />
     </footer>
   )
 }

@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { MotionConfig } from 'motion/react'
 import { bind } from 'cuelume'
 import NavPill from './components/NavPill'
-import AsciiHero from './components/AsciiHero'
 import Hero from './components/Hero'
 import Projects from './components/Projects'
 import Footer from './components/Footer'
@@ -17,7 +16,6 @@ function App() {
     <MotionConfig reducedMotion="user">
       <div className="min-h-dvh bg-bg font-sans text-ink antialiased">
         <NavPill />
-        <AsciiHero />
         <main className="mx-auto max-w-2xl bg-bg px-6">
           <Hero />
           <Projects />

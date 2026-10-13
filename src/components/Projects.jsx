@@ -1,8 +1,5 @@
-import { useReducedMotion } from 'motion/react'
-import { Atropos } from 'atropos/react'
-import 'atropos/css'
+import { motion as Motion } from 'motion/react'
 import Reveal from './Reveal'
-import { ArrowUpRight } from './Icons'
 import sensei from '../assets/sensei.png'
 import viewer from '../assets/shadys.png'
 import downloader from '../assets/shadysdownloader.png'
@@ -37,35 +34,16 @@ const projects = [
   },
 ]
 
-const Card = ({ project }) => (
-  <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 group-hover:border-accent/40">
-    <img
-      src={project.image}
-      alt=""
-      loading="lazy"
-      className={
-        project.cover
-          ? 'absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'
-          : 'absolute inset-0 m-auto h-3/5 w-3/5 object-contain transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3'
-      }
-      style={project.pixel ? { imageRendering: 'pixelated' } : undefined}
-    />
-    <span className="absolute top-3 right-3 flex translate-y-1 items-center gap-1 rounded-full bg-bg/80 px-2.5 py-1 text-[11px] text-muted opacity-0 backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-      {project.badge}
-      <ArrowUpRight />
-    </span>
-  </div>
-)
+const rotations = [-2.5, 1.8, -1.2]
+const spring = { type: 'spring', stiffness: 380, damping: 16 }
 
 const Projects = () => {
-  const reduced = useReducedMotion()
-
   return (
     <section aria-label="Projects" className="pb-20">
-      <Reveal as="p" delay={0} className="mb-6 text-lg text-muted">
+      <Reveal as="p" delay={0} className="mb-8 text-lg text-muted">
         some things I&rsquo;ve built
       </Reveal>
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-8 sm:grid-cols-3">
         {projects.map((project, i) => (
           <Reveal as="li" key={project.name} delay={i * 0.12}>
             <a
@@ -75,21 +53,37 @@ const Projects = () => {
               data-cuelume-navigate
               className="group block"
             >
-              {reduced ? (
-                <Card project={project} />
-              ) : (
-                <Atropos
-                  className="w-full"
-                  shadow={false}
-                  highlight={false}
-                  activeOffset={30}
-                  rotateTouch="squeeze"
-                >
-                  <Card project={project} />
-                </Atropos>
-              )}
-              <p className="mt-3 text-sm font-medium text-ink">{project.name}</p>
-              <p className="mt-0.5 text-xs text-muted">{project.stack}</p>
+              <Motion.div
+                initial={{ rotate: rotations[i] }}
+                animate={{ rotate: rotations[i] }}
+                whileHover={{ rotate: 0, scale: 1.05, y: -4 }}
+                transition={spring}
+                className="rounded-2xl border-[3px] border-white bg-bg p-3 shadow-[0_10px_24px_rgba(29,28,26,0.2)]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-surface">
+                  <img
+                    src={project.image}
+                    alt=""
+                    loading="lazy"
+                    className={
+                      project.cover
+                        ? 'absolute inset-0 h-full w-full object-cover'
+                        : 'absolute inset-0 m-auto h-3/5 w-3/5 object-contain'
+                    }
+                    style={project.pixel ? { imageRendering: 'pixelated' } : undefined}
+                  />
+                  <span
+                    className={`absolute top-2.5 right-2.5 rotate-3 rounded-full border-2 border-white px-2 py-0.5 text-[10px] font-medium tracking-wide text-white shadow-md ${
+                      project.badge === 'live' ? 'bg-[#7EC8E3]' : 'bg-[#7C3AED]'
+                    }`}
+                  >
+                    {project.badge}
+                  </span>
+                </div>
+              </Motion.div>
+              <p className="mt-4 text-sm font-medium text-ink">{project.name}</p>
+              <p className="mt-0.5 font-mono text-xs text-muted">{project.stack}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">{project.description}</p>
             </a>
           </Reveal>
         ))}

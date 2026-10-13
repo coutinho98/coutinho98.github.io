@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@mirayavandiepen/ram": "^0.1.0",
-    "ascii.rest": "^0.2.1",
-    "atropos": "^2.0.2",
     "cuelume": "^0.2.4",
     "motion": "^14.1.0",
     "react": "^19.0.0",

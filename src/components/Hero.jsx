@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion as Motion, AnimatePresence } from 'motion/react'
 import { Ram } from '@mirayavandiepen/ram'
 import Reveal from './Reveal'
 import avatar from '../assets/avatar.png'
+import { playNote, playChord } from '../lib/pentatonic'
 
 const WORD_COLORS = ['#1D1C1A', '#7C3AED', '#DD5B26', '#2563EB']
 
@@ -19,12 +21,35 @@ const fontUrl = (f) =>
 
 const tap = { type: 'spring', stiffness: 500, damping: 20 }
 
+const Words = ({ text, offset = 0 }) => {
+  const words = text.split(' ')
+  return (
+    <>
+      {words.map((w, i) => (
+        <Fragment key={i}>
+          <Motion.span
+            className="inline-block cursor-default"
+            whileHover={{ y: -3, color: '#1D1C1A' }}
+            transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+            onMouseEnter={() => playNote(offset + i)}
+            onClick={() => playChord(offset + i)}
+          >
+            {w}
+          </Motion.span>
+          {i < words.length - 1 ? ' ' : null}
+        </Fragment>
+      ))}
+    </>
+  )
+}
+
 const Hero = () => {
   const [font, setFont] = useState(WORD_FONTS[0])
   const [bold, setBold] = useState(false)
   const [italic, setItalic] = useState(false)
   const [color, setColor] = useState(WORD_COLORS[0])
   const [showPhoto, setShowPhoto] = useState(false)
+  const [photoPos, setPhotoPos] = useState(null)
 
   useEffect(() => {
     WORD_FONTS.slice(1).forEach((f) => {
@@ -40,9 +65,37 @@ const Hero = () => {
   }, [])
 
   return (
-    <section id="top" className="pt-16 pb-20 md:pt-24">
+    <section id="top" className="pt-32 pb-20 md:pt-40">
+      {createPortal(
+        <AnimatePresence>
+          {showPhoto && photoPos && (
+            <>
+              <Motion.div
+                key="blur"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="pointer-events-none fixed inset-0 z-40 bg-bg/30 backdrop-blur-md"
+              />
+              <Motion.img
+                key="photo"
+                src={avatar}
+                alt="Mateus"
+                initial={{ opacity: 0, x: '-50%', y: '-85%', scale: 0.6 }}
+                animate={{ opacity: 1, x: '-50%', y: '-108%', scale: 1 }}
+                exit={{ opacity: 0, x: '-50%', y: '-96%', scale: 0.75 }}
+                transition={{ type: 'spring', stiffness: 340, damping: 22 }}
+                style={{ left: photoPos.x, top: photoPos.y }}
+                className="pointer-events-none fixed z-50 h-24 w-24 rounded-full border border-line object-cover shadow-xl"
+              />
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
       <Reveal as="p" delay={0} className="mb-8 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.35] text-muted">
-        Hey,
+        <Words text="Hey," />
       </Reveal>
       <Reveal
         as="h1"
@@ -54,25 +107,19 @@ const Hero = () => {
           tabIndex={0}
           aria-label="Mateus"
           className="relative inline-block cursor-default decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline"
-          onMouseEnter={() => setShowPhoto(true)}
+          onMouseEnter={(e) => {
+            const r = e.currentTarget.getBoundingClientRect()
+            setPhotoPos({ x: r.left + r.width / 2, y: r.top })
+            setShowPhoto(true)
+          }}
           onMouseLeave={() => setShowPhoto(false)}
-          onFocus={() => setShowPhoto(true)}
+          onFocus={(e) => {
+            const r = e.currentTarget.getBoundingClientRect()
+            setPhotoPos({ x: r.left + r.width / 2, y: r.top })
+            setShowPhoto(true)
+          }}
           onBlur={() => setShowPhoto(false)}
         >
-          <AnimatePresence>
-            {showPhoto && (
-              <Motion.img
-                src={avatar}
-                alt=""
-                aria-hidden="true"
-                initial={{ opacity: 0, x: '-50%', y: 10, scale: 0.6, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, x: '-50%', y: 0, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, x: '-50%', y: 8, scale: 0.75, filter: 'blur(4px)' }}
-                transition={{ type: 'spring', stiffness: 340, damping: 22 }}
-                className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 h-20 w-20 rounded-full object-cover shadow-xl"
-              />
-            )}
-          </AnimatePresence>
           Mateus
         </span>
         ,{' '}
@@ -171,21 +218,23 @@ const Hero = () => {
         in Salvador.
       </Reveal>
       <Reveal as="p" delay={0.25} className="mt-12 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        I care about the small stuff: clean layouts and tiny interactions that
-        make software feel alive.
+        <Words text="I care about the small stuff: clean layouts and tiny interactions that make software feel alive." offset={1} />
       </Reveal>
-      <Reveal as="p" delay={0.35} className="mt-10 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        Reach out to me{' '}
-        <a
+      <Reveal as="p" delay={0.35} className="mt-14 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
+        <Words text="Reach out to me" offset={17} />{' '}
+        <Motion.a
           href="https://github.com/coutinho98"
           target="_blank"
           rel="noopener noreferrer"
           data-cuelume-navigate
-          className="text-ink underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+          animate={{ rotate: -2.5 }}
+          whileHover={{ rotate: 0, scale: 1.04 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+          className="inline-block rounded-full border-[3px] border-white bg-[#7EC8E3] px-2.5 text-[0.8em] text-white shadow-[0_6px_16px_rgba(29,28,26,0.28)]"
         >
           @coutinho98
-        </a>
-        . Open to work.
+        </Motion.a>
+        . <Words text="Open to work." offset={21} />
       </Reveal>
     </section>
   )
