@@ -43,7 +43,7 @@ const Projects = () => {
       <Reveal as="p" delay={0} className="mb-8 text-lg text-muted">
         some things I&rsquo;ve built
       </Reveal>
-      <ul className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
         {projects.map((project, i) => (
           <Reveal as="li" key={project.name} delay={i * 0.12}>
             <a
@@ -51,16 +51,16 @@ const Projects = () => {
               target="_blank"
               rel="noopener noreferrer"
               data-cuelume-navigate
-              className="group block"
+              className="group flex items-center gap-4 sm:block"
             >
               <Motion.div
                 initial={{ rotate: rotations[i] }}
                 animate={{ rotate: rotations[i] }}
                 whileHover={{ rotate: 0, scale: 1.05, y: -4 }}
                 transition={spring}
-                className="rounded-2xl border-[3px] border-white bg-bg p-3 shadow-[0_10px_24px_rgba(29,28,26,0.2)]"
+                className="w-28 shrink-0 rounded-2xl border-[3px] border-white bg-bg p-1.5 shadow-[0_10px_24px_rgba(29,28,26,0.2)] sm:w-full sm:p-3"
               >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-surface">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-surface sm:rounded-xl">
                   <img
                     src={project.image}
                     alt=""
@@ -73,7 +73,7 @@ const Projects = () => {
                     style={project.pixel ? { imageRendering: 'pixelated' } : undefined}
                   />
                   <span
-                    className={`absolute top-2.5 right-2.5 rotate-3 rounded-full border-2 border-white px-2 py-0.5 text-[10px] font-medium tracking-wide text-white shadow-md ${
+                    className={`absolute top-1.5 right-1.5 rotate-3 rounded-full border-2 border-white px-1.5 py-px text-[8px] font-medium tracking-wide text-white shadow-md sm:top-2.5 sm:right-2.5 sm:px-2 sm:py-0.5 sm:text-[10px] ${
                       project.badge === 'live' ? 'bg-[#7EC8E3]' : 'bg-[#7C3AED]'
                     }`}
                   >
@@ -81,9 +81,13 @@ const Projects = () => {
                   </span>
                 </div>
               </Motion.div>
-              <p className="mt-4 text-sm font-medium text-ink">{project.name}</p>
-              <p className="mt-0.5 font-mono text-xs text-muted">{project.stack}</p>
-              <p className="mt-1.5 text-xs leading-relaxed text-muted">{project.description}</p>
+              <div className="min-w-0 flex-1 sm:mt-4">
+                <p className="text-sm font-medium text-ink">{project.name}</p>
+                <p className="mt-0.5 font-mono text-xs text-muted">{project.stack}</p>
+                <p className="mt-1.5 hidden text-xs leading-relaxed text-muted sm:block">
+                  {project.description}
+                </p>
+              </div>
             </a>
           </Reveal>
         ))}
