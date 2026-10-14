@@ -3,8 +3,8 @@ import { createPortal } from 'react-dom'
 import { motion as Motion, AnimatePresence } from 'motion/react'
 import { Ram } from '@mirayavandiepen/ram'
 import Reveal from './Reveal'
+import Words from './Words'
 import avatar from '../assets/avatar.png'
-import { playNote, playChord } from '../lib/pentatonic'
 
 const WORD_COLORS = ['#1D1C1A', '#7C3AED', '#DD5B26', '#2563EB']
 
@@ -20,28 +20,6 @@ const fontUrl = (f) =>
   `https://fonts.googleapis.com/css2?family=${f.name.replace(/ /g, '+')}:wght@${f.weight ?? 500}&display=swap`
 
 const tap = { type: 'spring', stiffness: 500, damping: 20 }
-
-const Words = ({ text, offset = 0 }) => {
-  const words = text.split(' ')
-  return (
-    <>
-      {words.map((w, i) => (
-        <Fragment key={i}>
-          <Motion.span
-            className="inline-block cursor-default"
-            whileHover={{ y: -3, color: '#1D1C1A' }}
-            transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-            onMouseEnter={() => playNote(offset + i)}
-            onClick={() => playChord(offset + i)}
-          >
-            {w}
-          </Motion.span>
-          {i < words.length - 1 ? ' ' : null}
-        </Fragment>
-      ))}
-    </>
-  )
-}
 
 const Hero = () => {
   const [font, setFont] = useState(WORD_FONTS[0])
@@ -102,7 +80,14 @@ const Hero = () => {
         delay={0.1}
         className="text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.35] font-normal whitespace-normal md:whitespace-nowrap text-ink"
       >
-        I&rsquo;m{' '}
+        <Motion.span
+          className="inline-block cursor-default"
+          whileHover={{ y: -3 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+          onMouseEnter={() => playThemeChord(1)}
+        >
+          I&rsquo;m{' '}
+        </Motion.span>
         <span
           tabIndex={0}
           aria-label="Mateus"
@@ -111,6 +96,7 @@ const Hero = () => {
             const r = e.currentTarget.getBoundingClientRect()
             setPhotoPos({ x: r.left + r.width / 2, y: r.top })
             setShowPhoto(true)
+            playThemeChord(2)
           }}
           onMouseLeave={() => setShowPhoto(false)}
           onFocus={(e) => {
@@ -125,6 +111,7 @@ const Hero = () => {
         ,{' '}
         <span
           className="relative mx-2 inline-block md:w-[280px] md:text-center"
+          onMouseEnter={() => playThemeChord(3)}
           style={{
             fontFamily: font.family ? `"${font.name}", sans-serif` : undefined,
             fontSize: font.scale !== 1 ? `${font.scale}em` : undefined,
