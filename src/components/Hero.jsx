@@ -3,10 +3,11 @@ import { createPortal } from 'react-dom'
 import { motion as Motion, AnimatePresence } from 'motion/react'
 import { Ram } from '@mirayavandiepen/ram'
 import Reveal from './Reveal'
+import Words from './Words'
+import { playThemeNote, subscribeSteps } from '../lib/pentatonic'
 import avatar from '../assets/avatar.png'
-import { playNote, playChord } from '../lib/pentatonic'
 
-const WORD_COLORS = ['#1D1C1A', '#7C3AED', '#DD5B26', '#2563EB']
+const WORD_COLORS = ['rgb(var(--c-ink))', '#7C3AED', '#DD5B26', '#2563EB']
 
 const WORD_FONTS = [
   { name: 'Space Grotesk', family: null, scale: 1 },
@@ -21,28 +22,6 @@ const fontUrl = (f) =>
 
 const tap = { type: 'spring', stiffness: 500, damping: 20 }
 
-const Words = ({ text, offset = 0 }) => {
-  const words = text.split(' ')
-  return (
-    <>
-      {words.map((w, i) => (
-        <Fragment key={i}>
-          <Motion.span
-            className="inline-block cursor-default"
-            whileHover={{ y: -3, color: '#1D1C1A' }}
-            transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-            onMouseEnter={() => playNote(offset + i)}
-            onClick={() => playChord(offset + i)}
-          >
-            {w}
-          </Motion.span>
-          {i < words.length - 1 ? ' ' : null}
-        </Fragment>
-      ))}
-    </>
-  )
-}
-
 const Hero = () => {
   const [font, setFont] = useState(WORD_FONTS[0])
   const [bold, setBold] = useState(false)
@@ -50,6 +29,9 @@ const Hero = () => {
   const [color, setColor] = useState(WORD_COLORS[0])
   const [showPhoto, setShowPhoto] = useState(false)
   const [photoPos, setPhotoPos] = useState(null)
+  const [activeStep, setActiveStep] = useState(-1)
+
+  useEffect(() => subscribeSteps(setActiveStep), [])
 
   useEffect(() => {
     WORD_FONTS.slice(1).forEach((f) => {
@@ -102,15 +84,27 @@ const Hero = () => {
         delay={0.1}
         className="text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.35] font-normal whitespace-normal md:whitespace-nowrap text-ink"
       >
-        I&rsquo;m{' '}
-        <span
+        <Motion.span
+          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 1 ? 'text-ink' : 'text-muted'}`}
+          animate={{ y: activeStep === 1 ? -4 : 0 }}
+          whileHover={{ y: -3 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+          onMouseEnter={() => playThemeNote(1)}
+        >
+          I&rsquo;m
+        </Motion.span>{' '}
+        <Motion.span
           tabIndex={0}
           aria-label="Mateus"
-          className="relative inline-block cursor-default decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline"
+          animate={{ y: activeStep === 2 ? -4 : 0 }}
+          whileHover={{ y: -3 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+          className={`relative inline-block cursor-default transition-colors duration-200 hover:text-ink decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline ${activeStep === 2 ? 'text-ink' : 'text-muted'}`}
           onMouseEnter={(e) => {
             const r = e.currentTarget.getBoundingClientRect()
             setPhotoPos({ x: r.left + r.width / 2, y: r.top })
             setShowPhoto(true)
+            playThemeNote(2)
           }}
           onMouseLeave={() => setShowPhoto(false)}
           onFocus={(e) => {
@@ -121,16 +115,23 @@ const Hero = () => {
           onBlur={() => setShowPhoto(false)}
         >
           Mateus
-        </span>
+        </Motion.span>
         ,{' '}
+        <Motion.span
+          className="relative mx-2 mt-8 mb-10 inline-block md:my-0 md:w-[280px] md:text-center"
+          onMouseEnter={() => playThemeNote(3)}
+          whileHover={{ scale: 1.05, y: -2 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 14 }}
+        >
         <span
-          className="relative mx-2 inline-block md:w-[280px] md:text-center"
           style={{
             fontFamily: font.family ? `"${font.name}", sans-serif` : undefined,
             fontSize: font.scale !== 1 ? `${font.scale}em` : undefined,
             fontWeight: bold ? 700 : (font.weight ?? 500),
             color,
-            transform: italic ? 'skewX(-10deg)' : undefined,
+            transform: `${italic ? 'skewX(-10deg) ' : ''}translateY(${activeStep === 3 ? -4 : 0}px)`,
+            transition: 'transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            display: 'inline-block',
           }}
         >
           <Ram
@@ -214,27 +215,37 @@ const Hero = () => {
               </Motion.button>
             ))}
           </span>
-        </span>{' '}
-        in Salvador.
+        </span>
+        </Motion.span>{' '}
+        <Motion.span
+          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 4 ? 'text-ink' : 'text-muted'}`}
+          animate={{ y: activeStep === 4 ? -4 : 0 }}
+          whileHover={{ y: -3 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
+          onMouseEnter={() => playThemeNote(4)}
+        >
+          in Salvador.
+        </Motion.span>
       </Reveal>
       <Reveal as="p" delay={0.25} className="mt-12 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        <Words text="I care about the small stuff: clean layouts and tiny interactions that make software feel alive." offset={1} />
+        <Words text="I care about the small stuff: clean layouts and tiny interactions that make software feel alive." offset={5} activeStep={activeStep} />
       </Reveal>
       <Reveal as="p" delay={0.35} className="mt-14 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        <Words text="Reach out to me" offset={17} />{' '}
+        <Words text="Reach out to me" offset={21} activeStep={activeStep} />{' '}
         <Motion.a
           href="https://github.com/coutinho98"
           target="_blank"
           rel="noopener noreferrer"
           data-cuelume-navigate
-          animate={{ rotate: -2.5 }}
+          animate={{ rotate: -2.5, y: activeStep === 25 ? -4 : 0 }}
           whileHover={{ rotate: 0, scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-          className="inline-block rounded-full border-[3px] border-white bg-[#7EC8E3] px-2.5 text-[0.8em] text-white shadow-[0_6px_16px_rgba(29,28,26,0.28)]"
+          onMouseEnter={() => playThemeNote(25)}
+          className="inline-block rounded-full border-[3px] border-white bg-[#7EC8E3] px-2.5 text-[0.8em] text-white shadow-badge"
         >
           @coutinho98
         </Motion.a>
-        . <Words text="Open to work." offset={21} />
+        . <Words text="Open to work." offset={26} activeStep={activeStep} />
       </Reveal>
     </section>
   )

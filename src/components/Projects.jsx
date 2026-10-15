@@ -58,7 +58,7 @@ const Projects = () => {
                 animate={{ rotate: rotations[i] }}
                 whileHover={{ rotate: 0, scale: 1.05, y: -4 }}
                 transition={spring}
-                className="w-28 shrink-0 rounded-2xl border-[3px] border-white bg-bg p-1.5 shadow-[0_10px_24px_rgba(29,28,26,0.2)] sm:w-full sm:p-3"
+                className="w-28 shrink-0 rounded-2xl border-[3px] border-white bg-bg p-1.5 shadow-sticker sm:w-full sm:p-3"
               >
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-surface sm:rounded-xl">
                   <img
