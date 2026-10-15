@@ -6,7 +6,7 @@ import { playMelody, resumeAudio } from '../lib/pentatonic'
 const MELODY_COOLDOWN = 17000
 
 const Footer = () => {
-  const lastPlay = useRef(0)
+  const lastPlay = useRef(-Infinity)
 
   const trigger = () => {
     const now = performance.now()

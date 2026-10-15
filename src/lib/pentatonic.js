@@ -72,6 +72,8 @@ const HEDWIG = [
   [7, 0.34], [4, 1.8],
 ]
 
+const MIX = [[-1,0,0.13],[4,0.34,0.13],[-8,0.34,0.05],[7,0.84,0.13],[6,1.01,0.13],[4,1.34,0.13],[-8,1.34,0.05],[11,2.02,0.13],[-8,2.35,0.05],[9,2.35,0.13],[-8,3.36,0.05],[6,3.36,0.13],[4,4.37,0.13],[-8,4.37,0.05],[7,4.87,0.13],[6,5.04,0.13],[-2,5.38,0.13],[3,5.38,0.13],[-13,6.05,0.05],[5,6.05,0.13],[-8,6.38,0.05],[-1,6.38,0.13],[-5,7.06,0.13],[-1,7.39,0.13],[-13,8.06,0.05],[-1,8.06,0.13],[4,8.4,0.13],[-8,8.4,0.05],[7,8.9,0.13],[6,9.07,0.13],[4,9.41,0.13],[-8,9.41,0.05],[11,10.08,0.13],[14,10.42,0.13],[-10,10.42,0.05],[-5,10.42,0.13],[-2,10.42,0.13],[2,10.42,0.13],[7,10.42,0.13],[13,11.09,0.13],[12,11.42,0.13],[-12,11.42,0.05],[-7,11.42,0.13],[-4,11.42,0.13],[0,11.42,0.13],[5,11.42,0.13],[8,12.1,0.13],[12,12.43,0.13],[-12,12.43,0.05],[-8,12.43,0.05],[-3,12.43,0.13],[0,12.43,0.13],[4,12.43,0.13],[11,12.94,0.13],[10,13.1,0.13],[-2,13.44,0.13],[-11,13.44,0.05],[-8,13.44,0.05],[-6,13.44,0.13],[7,14.11,0.13],[-8,14.45,0.05],[4,14.45,0.13],[-5,15.12,0.13],[-1,15.46,0.13],[7,16.13,0.13],[-13,16.13,0.05]]
+
 const themeStep = (step) =>
   HEDWIG[((step % HEDWIG.length) + HEDWIG.length) % HEDWIG.length]
 
@@ -89,16 +91,31 @@ export const playThemeChord = (step) => {
   chime(c, freq * Math.pow(2, 7 / 12), 0.09, 0.08)
 }
 
+const MELODY_TIMES = [0, 0.34, 0.84, 1.01, 1.34, 2.02, 2.35, 3.36, 4.37, 4.87, 5.04, 5.38, 6.05, 6.38, 7.39, 8.06, 8.4, 8.9, 9.07, 9.41, 10.08, 10.42, 11.09, 11.42, 12.43, 12.94, 13.1, 14.11, 14.45]
+
+const stepListeners = new Set()
+let stepTimers = []
+
+export const subscribeSteps = (cb) => {
+  stepListeners.add(cb)
+  return () => stepListeners.delete(cb)
+}
+
+const emitStep = (step) => stepListeners.forEach((cb) => cb(step))
+
 export const playMelody = () => {
   const c = ready()
   if (!c) return false
-  let t = 0.1
-  for (const [semi, gap] of HEDWIG) {
-    const freq = BASE * Math.pow(2, semi / 12)
-    chime(c, freq, 0.13, t)
-    chime(c, freq, 0.03, t + 0.3)
-    t += gap
+  stepTimers.forEach(clearTimeout)
+  stepTimers = []
+  for (const [semi, when, vol] of MIX) {
+    chime(c, BASE * Math.pow(2, semi / 12), vol, 0.1 + when)
   }
+  MELODY_TIMES.forEach((t, step) => {
+    stepTimers.push(setTimeout(() => emitStep(step), (0.1 + t) * 1000))
+  })
+  const end = MELODY_TIMES[MELODY_TIMES.length - 1] + 1
+  stepTimers.push(setTimeout(() => emitStep(-1), (0.1 + end) * 1000))
   return true
 }
 
