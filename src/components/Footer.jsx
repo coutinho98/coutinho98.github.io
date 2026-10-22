@@ -31,7 +31,7 @@ const Footer = () => {
     <footer className="relative pt-28 pb-32">
       <Reveal as="p" delay={0.1} className="text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] font-normal text-muted">
         <span onMouseEnter={onHover} onClick={onClick} className="cursor-pointer">
-          <Words text="peace out." offset={24} interaction="none" activeStep={activeStep} />
+          <Words text="peace out." offset={28} interaction="none" activeStep={activeStep} />
         </span>
       </Reveal>
     </footer>

@@ -22,6 +22,9 @@ const fontUrl = (f) =>
 
 const tap = { type: 'spring', stiffness: 500, damping: 20 }
 
+// one size, one rhythm for the whole intro
+const prose = 'text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.45] tracking-[-0.01em] text-pretty text-muted'
+
 const Hero = () => {
   const [font, setFont] = useState(WORD_FONTS[0])
   const [bold, setBold] = useState(false)
@@ -76,35 +79,32 @@ const Hero = () => {
         </AnimatePresence>,
         document.body
       )}
-      <Reveal as="p" delay={0} className="mb-8 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.35] text-muted">
+      <Reveal as="p" delay={0} className={`mb-6 ${prose}`}>
         <Words text="Hey," />
       </Reveal>
-      <Reveal
-        as="h1"
-        delay={0.1}
-        className="text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.35] font-normal whitespace-normal md:whitespace-nowrap text-ink"
-      >
+      <Reveal as="div" delay={0.1} className={prose}>
+        <h1 className="inline font-normal">
         <Motion.span
-          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 1 ? 'text-ink' : 'text-muted'}`}
-          animate={{ y: activeStep === 1 ? -4 : 0 }}
+          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 0 ? 'text-ink' : 'text-muted'}`}
+          animate={{ y: activeStep === 0 ? -4 : 0 }}
           whileHover={{ y: -3 }}
           transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-          onMouseEnter={() => playThemeNote(1)}
+          onMouseEnter={() => playThemeNote(0)}
         >
           I&rsquo;m
         </Motion.span>{' '}
         <Motion.span
           tabIndex={0}
           aria-label="Mateus"
-          animate={{ y: activeStep === 2 ? -4 : 0 }}
+          animate={{ y: activeStep === 1 ? -4 : 0 }}
           whileHover={{ y: -3 }}
           transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-          className={`relative inline-block cursor-default transition-colors duration-200 hover:text-ink decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline ${activeStep === 2 ? 'text-ink' : 'text-muted'}`}
+          className={`relative inline-block cursor-default transition-colors duration-200 hover:text-ink decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline ${activeStep === 1 ? 'text-ink' : 'text-muted'}`}
           onMouseEnter={(e) => {
             const r = e.currentTarget.getBoundingClientRect()
             setPhotoPos({ x: r.left + r.width / 2, y: r.top })
             setShowPhoto(true)
-            playThemeNote(2)
+            playThemeNote(1)
           }}
           onMouseLeave={() => setShowPhoto(false)}
           onFocus={(e) => {
@@ -117,8 +117,10 @@ const Hero = () => {
           Mateus
         </Motion.span>
         ,{' '}
+        <Words text="a" offset={2} activeStep={activeStep} />{' '}
         <Motion.span
-          className="relative mx-2 mt-8 mb-10 inline-block md:my-0 md:w-[280px] md:text-center"
+          tabIndex={0}
+          className="group relative inline-block outline-offset-4"
           onMouseEnter={() => playThemeNote(3)}
           whileHover={{ scale: 1.05, y: -2 }}
           transition={{ type: 'spring', stiffness: 300, damping: 14 }}
@@ -129,7 +131,7 @@ const Hero = () => {
             fontSize: font.scale !== 1 ? `${font.scale}em` : undefined,
             fontWeight: bold ? 700 : (font.weight ?? 500),
             color,
-            transform: `${italic ? 'skewX(-10deg) ' : ''}translateY(${activeStep === 3 ? -4 : 0}px)`,
+            transform: `${italic ? 'skewX(-10deg) ' : ''}translateY(${activeStep === 3 || activeStep === 4 ? -4 : 0}px)`,
             transition: 'transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1)',
             display: 'inline-block',
           }}
@@ -142,10 +144,14 @@ const Hero = () => {
             style={{ '--ram-inset': '7px', padding: '0 6px' }}
           >
             fullstack developer
-          </Ram>          <span
+          </Ram>
+          {/* floats under the word on hover or tap, so it never pushes the text apart */}
+          <span className="pointer-events-none absolute top-full left-1/2 z-20 -translate-x-1/2 pt-2 opacity-0 transition-[opacity,transform] duration-200 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
+          <span
             role="toolbar"
             aria-label="Word style"
-            className="absolute top-full left-1/2 z-10 mt-1.5 inline-flex -translate-x-1/2 items-center gap-0.5 rounded-full border border-line bg-surface px-1 py-0.5"
+            className="inline-flex items-center gap-0.5 rounded-full border border-line bg-surface px-1 py-0.5 text-base font-normal not-italic shadow-sm"
+            style={{ fontFamily: 'Space Grotesk, sans-serif', color: 'rgb(var(--c-ink))', transform: 'none' }}
           >
             {WORD_FONTS.map((f) => (
               <Motion.button
@@ -215,37 +221,30 @@ const Hero = () => {
               </Motion.button>
             ))}
           </span>
+          </span>
         </span>
         </Motion.span>{' '}
-        <Motion.span
-          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 4 ? 'text-ink' : 'text-muted'}`}
-          animate={{ y: activeStep === 4 ? -4 : 0 }}
-          whileHover={{ y: -3 }}
-          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-          onMouseEnter={() => playThemeNote(4)}
-        >
-          in Salvador.
-        </Motion.span>
+        <Words text="from Salvador, Brazil." offset={5} activeStep={activeStep} />
+        </h1>{' '}
+        <Words text="Building products from database to interface." offset={8} activeStep={activeStep} />
       </Reveal>
-      <Reveal as="p" delay={0.25} className="mt-12 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        <Words text="I care about the small stuff: clean layouts and tiny interactions that make software feel alive." offset={5} activeStep={activeStep} />
+      <Reveal as="p" delay={0.2} className={`mt-6 ${prose}`}>
+        <Words text="My stack: React, TypeScript, Tailwind, NestJS, Prisma and Python." offset={14} activeStep={activeStep} />
       </Reveal>
-      <Reveal as="p" delay={0.35} className="mt-14 text-[clamp(1.375rem,2.6vw,1.625rem)] leading-[1.4] text-muted">
-        <Words text="Reach out to me" offset={21} activeStep={activeStep} />{' '}
+      <Reveal as="p" delay={0.3} className={`mt-6 ${prose}`}>
+        <Words text="I'm open to new roles. Let's talk." offset={23} activeStep={activeStep} />{' '}
         <Motion.a
           href="https://github.com/coutinho98"
           target="_blank"
           rel="noopener noreferrer"
           data-cuelume-navigate
-          animate={{ rotate: -2.5, y: activeStep === 25 ? -4 : 0 }}
+          animate={{ rotate: -2.5 }}
           whileHover={{ rotate: 0, scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-          onMouseEnter={() => playThemeNote(25)}
           className="inline-block rounded-full border-[3px] border-white bg-[#7EC8E3] px-2.5 text-[0.8em] text-white shadow-badge"
         >
           @coutinho98
         </Motion.a>
-        . <Words text="Open to work." offset={26} activeStep={activeStep} />
       </Reveal>
     </section>
   )
