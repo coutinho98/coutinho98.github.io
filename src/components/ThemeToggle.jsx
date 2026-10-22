@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion as Motion } from 'motion/react'
+import { m as Motion } from 'motion/react'
 import { Sun, Moon } from './Icons'
 
 const ThemeToggle = () => {
@@ -48,11 +48,3 @@ const ThemeToggle = () => {
 
 export default ThemeToggle
 
-export const initTheme = () => {
-  try {
-    const saved = localStorage.getItem('theme')
-    if (saved === 'dark') document.documentElement.classList.add('dark')
-  } catch {
-    /* storage unavailable */
-  }
-}

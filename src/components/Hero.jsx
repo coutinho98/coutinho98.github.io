@@ -1,11 +1,12 @@
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { motion as Motion, AnimatePresence } from 'motion/react'
+import { m as Motion, AnimatePresence } from 'motion/react'
 import { Ram } from '@mirayavandiepen/ram'
 import Reveal from './Reveal'
 import Words from './Words'
 import { playThemeNote, subscribeSteps } from '../lib/pentatonic'
-import avatar from '../assets/avatar.png'
+import { noteClass } from '../lib/noteClass'
+import avatar from '../assets/avatar.webp'
 
 const WORD_COLORS = ['rgb(var(--c-ink))', '#7C3AED', '#DD5B26', '#2563EB']
 
@@ -19,6 +20,19 @@ const WORD_FONTS = [
 
 const fontUrl = (f) =>
   `https://fonts.googleapis.com/css2?family=${f.name.replace(/ /g, '+')}:wght@${f.weight ?? 500}&display=swap`
+
+// the extra fonts are only fetched once someone reaches for the style toolbar
+let fontsLoaded = false
+const loadFonts = () => {
+  if (fontsLoaded) return
+  fontsLoaded = true
+  WORD_FONTS.slice(1).forEach((f) => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = fontUrl(f)
+    document.head.appendChild(link)
+  })
+}
 
 const tap = { type: 'spring', stiffness: 500, damping: 20 }
 
@@ -36,19 +50,6 @@ const Hero = () => {
 
   useEffect(() => subscribeSteps(setActiveStep), [])
 
-  useEffect(() => {
-    WORD_FONTS.slice(1).forEach((f) => {
-      const id = `font-${f.name.replace(/\s+/g, '-').toLowerCase()}`
-      if (!document.getElementById(id)) {
-        const link = document.createElement('link')
-        link.id = id
-        link.rel = 'stylesheet'
-        link.href = fontUrl(f)
-        document.head.appendChild(link)
-      }
-    })
-  }, [])
-
   return (
     <section id="top" className="pt-32 pb-20 md:pt-40">
       {createPortal(
@@ -61,7 +62,7 @@ const Hero = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="pointer-events-none fixed inset-0 z-40 bg-bg/30 backdrop-blur-md"
+                className="pointer-events-none fixed inset-0 z-40 bg-bg/50 backdrop-blur-sm"
               />
               <Motion.img
                 key="photo"
@@ -84,22 +85,13 @@ const Hero = () => {
       </Reveal>
       <Reveal as="div" delay={0.1} className={prose}>
         <h1 className="inline font-normal">
-        <Motion.span
-          className={`inline-block cursor-default transition-colors duration-200 hover:text-ink ${activeStep === 0 ? 'text-ink' : 'text-muted'}`}
-          animate={{ y: activeStep === 0 ? -4 : 0 }}
-          whileHover={{ y: -3 }}
-          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-          onMouseEnter={() => playThemeNote(0)}
-        >
+        <span className={noteClass(activeStep === 0)} onMouseEnter={() => playThemeNote(0)}>
           I&rsquo;m
-        </Motion.span>{' '}
-        <Motion.span
+        </span>{' '}
+        <span
           tabIndex={0}
           aria-label="Mateus"
-          animate={{ y: activeStep === 1 ? -4 : 0 }}
-          whileHover={{ y: -3 }}
-          transition={{ type: 'spring', stiffness: 450, damping: 18 }}
-          className={`relative inline-block cursor-default transition-colors duration-200 hover:text-ink decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline ${activeStep === 1 ? 'text-ink' : 'text-muted'}`}
+          className={`relative decoration-line underline-offset-4 outline-offset-4 hover:underline focus-visible:underline ${noteClass(activeStep === 1)}`}
           onMouseEnter={(e) => {
             const r = e.currentTarget.getBoundingClientRect()
             setPhotoPos({ x: r.left + r.width / 2, y: r.top })
@@ -115,13 +107,18 @@ const Hero = () => {
           onBlur={() => setShowPhoto(false)}
         >
           Mateus
-        </Motion.span>
+        </span>
         ,{' '}
         <Words text="a" offset={2} activeStep={activeStep} />{' '}
         <Motion.span
           tabIndex={0}
           className="group relative inline-block outline-offset-4"
-          onMouseEnter={() => playThemeNote(3)}
+          onMouseEnter={() => {
+            loadFonts()
+            playThemeNote(3)
+          }}
+          onFocus={loadFonts}
+          onTouchStart={loadFonts}
           whileHover={{ scale: 1.05, y: -2 }}
           transition={{ type: 'spring', stiffness: 300, damping: 14 }}
         >

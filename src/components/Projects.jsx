@@ -1,6 +1,6 @@
-import { motion as Motion } from 'motion/react'
+import { m as Motion } from 'motion/react'
 import Reveal from './Reveal'
-import sensei from '../assets/sensei.png'
+import sensei from '../assets/sensei.webp'
 import viewer from '../assets/shadys.png'
 import downloader from '../assets/shadysdownloader.png'
 

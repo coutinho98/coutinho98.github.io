@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion as Motion, useScroll, useMotionValueEvent, useSpring } from 'motion/react'
+import { m as Motion, useScroll, useMotionValueEvent, useSpring } from 'motion/react'
 import { GitHub, Linkedin, Email } from './Icons'
 import ThemeToggle from './ThemeToggle'
 
@@ -52,7 +52,7 @@ const Navbar = () => {
         style={{ x: mx, y: my }}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="flex items-center gap-1 rounded-full border border-line bg-bg/80 py-1.5 pr-2 pl-2 shadow-sm backdrop-blur-md"
+        className="flex items-center gap-1 rounded-full border border-line bg-bg/85 py-1.5 pr-2 pl-2 shadow-sm backdrop-blur-sm"
       >
         {links.map(({ href, label, Icon }) => (
           <Motion.a

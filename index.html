@@ -5,6 +5,11 @@
     <link rel="icon" type="image/x-icon" href="/coutinho98.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FBFBFB" />
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark')
+      } catch {}
+    </script>
     <meta
       name="description"
       content="I'm Mateus, a fullstack developer from Salvador, Brazil. Building products from database to interface with React, TypeScript, NestJS, Prisma and Python."
@@ -19,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Caveat:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <title>mateus.</title>
